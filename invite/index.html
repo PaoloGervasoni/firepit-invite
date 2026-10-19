@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join my tent on Firepit</title>
+  <meta name="description" content="You've been invited to a tent on Firepit. Open the app to see your invite." />
+  <meta name="apple-itunes-app" content="app-id=6755539848, app-argument=firepitapp://firepitapp.com/invite" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Firepit" />
+  <meta property="og:title" content="Join my tent on Firepit" />
+  <meta property="og:description" content="You've been invited to a tent. Open Firepit to see your invite." />
+  <meta property="og:image" content="https://invite.firepitapp.com/card.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Join my tent on Firepit" />
+  <meta name="twitter:description" content="You've been invited to a tent. Open Firepit to see your invite." />
+  <meta name="twitter:image" content="https://invite.firepitapp.com/card.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      background: #000;
+      color: #fff;
+      font-family: "Instrument Sans", sans-serif;
+    }
+    main { width: min(420px, 100%); text-align: center; }
+    img { width: 100%; height: auto; border-radius: 16px; }
+    h1 {
+      margin: 28px 0 8px;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    p { margin: 0; color: #c8c8c8; font-size: 16px; line-height: 1.45; }
+    .actions { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+    a {
+      display: block;
+      padding: 14px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .primary { background: #ff7124; color: #fff; }
+    .secondary { background: transparent; color: #fff; border: 1px solid #3a3a3a; }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="/card.png" alt="Firepit" width="1200" height="630" />
+    <h1>Join my tent on Firepit</h1>
+    <p>Your invite is waiting in Firepit. If the app didn't open, tap Open in Firepit.</p>
+    <div class="actions">
+      <a class="primary" id="open" href="firepitapp://firepitapp.com/invite">Open in Firepit</a>
+      <a class="secondary" href="https://apps.apple.com/app/id6755539848">Download on the App Store</a>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var tentRaw = params.get("tentId") || "";
+      var refRaw = (params.get("ref") || "").trim().toLowerCase();
+      var tentId = /^\d{1,12}$/.test(tentRaw) && Number(tentRaw) > 0 ? tentRaw : "";
+      var referral = /^[a-f0-9]{8,64}$/.test(refRaw) ? refRaw : "";
+      var query = new URLSearchParams();
+      if (tentId) query.set("tentId", tentId);
+      if (referral) query.set("ref", referral);
+      var appUrl = "firepitapp://firepitapp.com/invite" +
+        (query.toString() ? "?" + query.toString() : "");
+      var storeUrl = "https://apps.apple.com/app/id6755539848";
+      var open = document.getElementById("open");
+      open.href = appUrl;
+
+      function openApp() {
+        var started = Date.now();
+        window.location.href = appUrl;
+        setTimeout(function () {
+          if (document.visibilityState === "visible" && Date.now() - started >= 1200) {
+            window.location.href = storeUrl;
+          }
+        }, 1500);
+      }
+
+      open.addEventListener("click", function (event) {
+        event.preventDefault();
+        openApp();
+      });
+      openApp();
+    })();
+  </script>
+</body>
+</html>

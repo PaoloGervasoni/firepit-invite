@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["6MX9363XH3.com.campfire.app.production"],
+        "components": [
+          { "/": "/invite", "comment": "Tent invite inbox" },
+          { "/": "/invite/*", "comment": "Tent invite inbox" }
+        ]
+      }
+    ]
+  }
+}
